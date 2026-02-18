@@ -6,24 +6,25 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class Client {
-    private String address;
-    private int port;
+    private final String address;
+    private final int port;
+    private final String request;
 
-    public Client(String address, int port) {
+    public Client(String address, int port, String request) {
         this.address = address;
         this.port = port;
+        this.request = request;
     }
 
     public void run() {
-        String msg = "Give me a record # 12";
         System.out.println("Client started!");
 
         try (Socket socket = new Socket(address, port);
              DataInputStream input = new DataInputStream(socket.getInputStream());
              DataOutputStream output = new DataOutputStream(socket.getOutputStream())
         ) {
-            output.writeUTF(msg);
-            System.out.println("Sent: " + msg);
+            output.writeUTF(request);
+            System.out.println("Sent: " + request);
             String response = input.readUTF();
             System.out.println("Received: " + response);
 

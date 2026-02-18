@@ -11,28 +11,28 @@ public class Database {
     }
 
     public String get(int index) {
-        if (index < 0 || index > 999 || "".equals(data[index])) {
+        if (index <= 0 || index > 999 || "".equals(data[index - 1])) {
             return "ERROR";
         }
 
-        return data[index];
+        return data[index - 1];
     }
 
     public String set(int index, String text) {
-        if (index < 0 || index > 999) {
+        if (index <= 0 || index > 999) {
             return "ERROR";
         }
 
-        data[index] = text;
+        data[index - 1] = text;
         return "OK";
     }
 
     public String delete(int index) {
-        if (index < 0 || index > 999) {
+        if (index <= 0 || index > 999) {
             return "ERROR";
         }
 
-        data[index] = "";
+        data[index - 1] = "";
         return "OK";
     }
 

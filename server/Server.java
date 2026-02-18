@@ -32,7 +32,7 @@ public class Server {
                      DataInputStream input = new DataInputStream(socket.getInputStream());
                      DataOutputStream output = new DataOutputStream(socket.getOutputStream())
                 ) {
-                    String receivedMsg = input.readUTF();
+                    String receivedMsg = input.readUTF().trim();
 
                     parts = receivedMsg.split("\\s+", 3);
                     clientCmd = parts[0];
