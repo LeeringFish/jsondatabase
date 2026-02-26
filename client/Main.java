@@ -4,14 +4,14 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
 public class Main {
-    @Parameter(names = "-t", description = "Name of command")
+    @Parameter(names = "-t", description = "Type of command")
     String commandName;
 
-    @Parameter(names = "-i", description = "Index of database")
-    Integer index;
+    @Parameter(names = "-k", description = "Key")
+    Integer key;
 
-    @Parameter(names = "-m", description = "Text to use with set command")
-    String newText = "";
+    @Parameter(names = "-v", description = "Value to use with set command")
+    String value = "";
 
     public static void main(String[] args) {
         String address = "127.0.0.1";
@@ -29,6 +29,6 @@ public class Main {
     }
 
     String buildRequest() {
-        return String.format("%s %d %s", commandName, index, newText);
+        return String.format("%s %d %s", commandName, key, value);
     }
 }
