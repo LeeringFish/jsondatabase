@@ -2,16 +2,17 @@ package client;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.google.gson.Gson;
 
 public class Main {
-    @Parameter(names = "-t", description = "Type of command")
-    String commandName;
+    @Parameter(names = "-t", description = "Type of command", required = true)
+    String type;
 
     @Parameter(names = "-k", description = "Key")
-    Integer key;
+    String key = null;
 
     @Parameter(names = "-v", description = "Value to use with set command")
-    String value = "";
+    String value = null;
 
     public static void main(String[] args) {
         String address = "127.0.0.1";
@@ -23,12 +24,13 @@ public class Main {
                 .build()
                 .parse(args);
 
-        String request = main.buildRequest();
-        Client client = new Client(address, port, request);
+        Request request = new Request(main.type, main.key, main.value);
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(request);
+        Client client = new Client(address, port, requestJson);
         client.run();
     }
 
-    String buildRequest() {
-        return String.format("%s %d %s", commandName, key, value);
-    }
+    record Request(String type, String key, String value) {}
+
 }
