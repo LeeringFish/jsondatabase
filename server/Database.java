@@ -1,38 +1,38 @@
 package server;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Database {
-    private String[] data;
+    private Map<String, String> data;
 
     public Database() {
-        this.data = new String[1000];
-        Arrays.fill(data, "");
+        data = new HashMap<>();
     }
 
-    public String get(int index) {
-        if (index <= 0 || index > 999 || "".equals(data[index - 1])) {
+    public String get(String key) {
+        String result = data.get(key);
+
+        if (result == null) {
             return "ERROR";
         }
 
-        return data[index - 1];
+        return result;
     }
 
-    public String set(int index, String text) {
-        if (index <= 0 || index > 999) {
-            return "ERROR";
-        }
-
-        data[index - 1] = text;
+    public String set(String key, String value) {
+        data.put(key, value);
         return "OK";
     }
 
-    public String delete(int index) {
-        if (index <= 0 || index > 999) {
+    public String delete(String key) {
+        String removed = data.remove(key);
+
+        if (removed == null) {
             return "ERROR";
         }
 
-        data[index - 1] = "";
         return "OK";
     }
 

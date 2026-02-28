@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import com.google.gson.Gson;
 
 public class Server {
     private final String address;
@@ -34,23 +35,22 @@ public class Server {
                 ) {
                     String receivedMsg = input.readUTF().trim();
 
-                    parts = receivedMsg.split("\\s+", 3);
-                    clientCmd = parts[0];
+                    Request request = new Gson().fromJson(receivedMsg, Request.class);
+
+                    clientCmd = request.type();
 
                     if ("exit".equals(clientCmd)) {
                         output.writeUTF("OK");
                         break;
                     }
 
-                    index = Integer.parseInt(parts[1]);
 
                     if ("get".equals(clientCmd)) {
-                        cmd = new GetCommand(db, index);
+                        cmd = new GetCommand(db, request.key());
                     } else if ("delete".equals(clientCmd)) {
-                        cmd = new DeleteCommand(db, index);
+                        cmd = new DeleteCommand(db, request.key());
                     } else if ("set".equals(clientCmd)) {
-                        newText = parts[2];
-                        cmd = new SetCommand(db, index, newText);
+                        cmd = new SetCommand(db, request.key(), request.value());
                     }
 
                     if (cmd != null) {
@@ -72,5 +72,8 @@ public class Server {
         }
     }
 
+    record Request(String type, String key, String value) {}
+
+    record Response(String response, String value, String reason) {}
 
 }

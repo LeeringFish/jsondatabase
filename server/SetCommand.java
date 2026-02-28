@@ -2,18 +2,18 @@ package server;
 
 public class SetCommand implements Command {
     private final Database db;
-    private final int index;
-    private final String newText;
+    private final String key;
+    private final String value;
     private String result;
 
-    public SetCommand(Database db, int index, String newText) {
+    public SetCommand(Database db, String key, String value) {
         this.db = db;
-        this.index = index;
-        this.newText = newText;
+        this.key = key;
+        this.value = value;
     }
 
     public void execute() {
-        this.result = db.set(index, newText);
+        this.result = db.set(key, value);
     }
 
     public String getResult() {

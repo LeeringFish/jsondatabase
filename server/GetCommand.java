@@ -2,16 +2,16 @@ package server;
 
 public class GetCommand implements Command {
     private final Database db;
-    private final int index;
+    private final String key;
     private String result;
 
-    public GetCommand(Database db, int index) {
+    public GetCommand(Database db, String key) {
         this.db = db;
-        this.index = index;
+        this.key = key;
     }
 
     public void execute() {
-        this.result = db.get(index);
+        this.result = db.get(key);
     }
 
     public String getResult() {

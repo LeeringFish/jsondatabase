@@ -2,16 +2,16 @@ package server;
 
 public class DeleteCommand implements Command {
     private final Database db;
-    private final int index;
+    private final String key;
     private String result;
 
-    public DeleteCommand(Database db, int index) {
+    public DeleteCommand(Database db, String key) {
         this.db = db;
-        this.index = index;
+        this.key = key;
     }
 
     public void execute() {
-        this.result = db.delete(index);
+        this.result = db.delete(key);
     }
 
     public String getResult() {
